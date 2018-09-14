@@ -1,7 +1,9 @@
 package container
 
 import "fmt"
-import "container/heap"
+import (
+	"container/heap"
+)
 
 // An IntHeap is a min-heap of ints.
 type IntHeap []int

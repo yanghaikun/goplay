@@ -8,11 +8,13 @@ import (
 	"github.com/yanghaikun/utils"
 	"log"
 	"path/filepath"
+	"github.com/yanghaikun/goplay/syntax"
 )
 
 
 
 func main() {
+	syntax.TypeAssert()
 	log.Printf("1 = ", 1)
 	log.Println("2")
 	log.Println("3")

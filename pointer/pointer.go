@@ -1,7 +1,11 @@
-package main
+package pointer
 
-import "fmt"
+import (
+	"fmt"
+	"github.com/yanghaikun/goplay/container"
+)
 
+var test container.IntHeap
 type MyPoint struct {
 	X int
 	Y int
@@ -19,6 +23,17 @@ func printFuncPointer(pp *MyPoint){
 	fmt.Printf(" -> %v", pp)
 }
 
+func printChangeLocation(pp *MyPoint){
+	fmt.Printf("\n location of pp is %p", &pp)
+	pp = &MyPoint{}
+	pp.X = 1 // 实际上应该写做 (*pp).X，Golang 给了语法糖，减少了麻烦，但是也导致了 * 的不一致
+	pp.Y = 1
+	fmt.Printf("\n location of pp is %p", &pp)
+	fmt.Printf(" -> %v", pp)
+}
+
+
+
 func (p MyPoint) printMethodValue(){
 	p.X += 1
 	p.Y += 1
@@ -32,13 +47,21 @@ func (pp *MyPoint) printMethodPointer(){
 	fmt.Printf(" -> %v", pp)
 }
 
-func testMap(value map[string]int) {
+func testChangeMapValue(value map[string]int) {
 	value["0"] = value["0"] + 1
 	value["1"] = value["1"] + 1
 	fmt.Printf(" -> %v", value)
 }
 
-func main(){
+func testChangeMapLocation(value map[string]int) {
+	fmt.Printf("\n location of value is %p", &value)
+	value = make(map[string]int, 1)
+	value["0"] = 999
+	fmt.Printf("\n location of value is %p", &value)
+	fmt.Printf(" -> %v", value)
+}
+
+func Pointer(){
 	p := MyPoint{0, 0}
 	pp := &MyPoint{0, 0}
 
@@ -76,10 +99,18 @@ func main(){
 	fmt.Printf(" --> %v", pp)
 	// Output: pointer to method(pointer): &{1 1} -> &{2 2} --> &{2 2}
 
+	fmt.Printf("\n test change Location: %v, location is %p", pp, pp)
+	printChangeLocation(pp)
+	fmt.Printf(" --> %v, location is %p", pp, pp)
+
 	value := map[string]int{"0" : 0, "1" : 1}
-	fmt.Printf("\n testMap: %v", value)
-    testMap(value)
-	fmt.Printf("testMap: %v", value)
+	fmt.Printf("\n testChangeMapValue: %v", value)
+    testChangeMapValue(value)
+	fmt.Printf("testChangeMapValue: %v", value)
+
+	fmt.Printf("\n testChangeMapLocation: %v, location is %p", value, &value)
+	testChangeMapLocation(value)
+	fmt.Printf("\n testChangeMapLocation: %v, location is %p", value, &value)
 
 	value = make(map[string]int, 1)
 	fmt.Printf("\nlocation of value is %p", &value)

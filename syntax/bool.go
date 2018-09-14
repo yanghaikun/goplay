@@ -1,0 +1,4 @@
+package syntax
+func NilBool() {
+
+}
