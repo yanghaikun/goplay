@@ -1,4 +1,4 @@
-module github.com/yanghaikun/goplay/module/example
+module github.com/yanghaikun/goplay/module/example2
 
 go 1.13
 
